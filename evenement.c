@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <GL/glut.h>
-#include <GL/gl.h>
+#include "droite.h"
 #include "evenement.h"
 
 
@@ -16,7 +14,7 @@ listc nouveauSommet(listc l, int x, int y)
 }
 
 
-void firstElement (listc l, int x, int y)
+void firstElement(listc l, int x, int y)
 {
 	if(l->next != NULL)
 	{
@@ -36,6 +34,22 @@ void mouseClick(int button, int state, int x, int y, listc l)
 	{
 		fprintf(stderr,"Presser ");
 		nouveauSommet(l,x,y);
+		tracerDroite(x, y, l->next->x, l->next->y);
 		glutPostRedisplay();
 	}
+}
+
+void keyboard_CB(unsigned char key, listc l)
+{
+	printf("key = %c = %d\n", key, key);
+	if(key==99)
+	{
+		int x;
+		int y;
+		firstElement(l, x, y);
+		tracerDroite(x, y, l->x, l->y);
+	}
+	if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
+
+	glutPostRedisplay();
 }

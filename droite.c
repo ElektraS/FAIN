@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
 #include "droite.h"
 
 void tracerPixel(int x, int y)
@@ -8,51 +11,51 @@ void tracerPixel(int x, int y)
 	glEnd();
 }
 
-void I_bresenham(Image* img, int xa, int ya, int xb, int yb)
+void tracerDroite(int xa, int ya, int xb, int yb)
 {
 	int count;
 	int currY;
 	int currX;
-	int dX=(xb-xa);
-	int dY=(yb-ya);
+	int dX = (xb-xa);
+	int dY = (yb-ya);
 
 	//1er et 2ème octants
 	if(dX>=0 && dY>=0)
 	{ //1er octant
 		if(dX>dY)
 		{
-			count=dX;
-			currY=ya;
-			for(currX=xa;currX<=xb;currX++)
+			count = dX;
+			currY = ya;
+			for(currX=xa; currX<=xb; currX++)
 			{
-				I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+				tracerPixel(currX, currY);
 				if(count>0)
 				{
-					count=count-2*dY;
+					count = count - 2*dY;
 				}
 				else
 				{
 					currY++;
-					count=count-2*dY+2*dX;
+					count = count - 2*dY + 2*dX;
 				}
 			}
 		}
 		//2ème octant
 		else
 		{
-			count=dY;
-			currX=xa;
-			for(currY=ya;currY<=yb;currY++)
+			count = dY;
+			currX = xa;
+			for(currY=ya; currY<=yb; currY++)
 			{
-				I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+				tracerPixel(currX, currY);
 				if(count>0)
 				{
-					count=count-2*dX;
+					count = count - 2*dX;
 				}
 				else
 				{
 					currX++;
-					count=count-2*dX+2*dY;
+					count = count - 2*dX + 2*dY;
 				} 
 			} 
 		}
@@ -64,38 +67,38 @@ void I_bresenham(Image* img, int xa, int ya, int xb, int yb)
 		 //3ème octant
 		 if(dY>-dX)
 		 {
-		 	count=dY;
-		 	currX=xa;
-		 	for(currY=ya;currY<=yb;currY++)
+		 	count = dY;
+		 	currX = xa;
+		 	for(currY=ya; currY<=yb; currY++)
 		 	{
-		 		I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+		 		tracerPixel(currX, currY);
 		 		if(count<0)
 		 		{
-		 			count=count-2*dX;
+		 			count = count - 2*dX;
 		 		}
 		 		else
 		 		{
 		 			currX--;
-		 			count=count-2*dX-2*dY;
+		 			count = count - 2*dX - 2*dY;
 		 		}
 		 	}
 		 }
 		 //4ème octant
 		 else
 		 {
-		 	count=dX;
-		 	currY=ya;
-		 	for(currX=xa;currX>=xb;currX--)
+		 	count = dX;
+		 	currY = ya;
+		 	for(currX=xa; currX>=xb; currX--)
 		 	{
-		 		I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+		 		tracerPixel(currX, currY);
 		 		if(count<0)
 		 		{
-		 			count=count+2*dY;
+		 			count = count + 2*dY;
 		 		}
 		 		else
 		 		{
 		 			currY++;
-		 			count=count+2*dY+2*dX;
+		 			count = count + 2*dY + 2*dX;
 		 		}
 		 	}
 		 }
@@ -107,38 +110,38 @@ void I_bresenham(Image* img, int xa, int ya, int xb, int yb)
 		 //5ème octant
 		 if(-dX>-dY)
 		 {
-		 	count=dX;
-		 	currY=ya;
-		 	for(currX=xa;currX>=xb;currX--)
+		 	count = dX;
+		 	currY = ya;
+		 	for(currX=xa; currX>=xb; currX--)
 		 	{
-		 		I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+		 		tracerPixel(currX, currY);
 		 		if(count<0)
 		 		{
-		 			count=count-2*dY;
+		 			count = count - 2*dY;
 		 		}
 		 		else
 		 		{
 		 			currY--;
-		 			count=count-2*dY+2*dX;
+		 			count = count - 2*dY + 2*dX;
 		 		}
 		 	}
 		 }
 		 //6ème octant
 		 else
 		 {
-		 	count=dY;
-		 	currX=xa;
-		 	for(currY=ya;currY>=yb;currY--)
+		 	count = dY;
+		 	currX = xa;
+		 	for(currY=ya; currY>=yb; currY--)
 		 	{
-		 		I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+		 		tracerPixel(currX, currY);
 		 		if(count<0)
 		 		{
-		 			count=count-2*dX;
+		 			count = count - 2*dX;
 		 		}
 		 		else
 		 		{
 		 			currX--;
-		 			count=count-2*dX+2*dY;
+		 			count = count - 2*dX + 2*dY;
 		 		}
 		 	}
 		 }
@@ -150,38 +153,38 @@ void I_bresenham(Image* img, int xa, int ya, int xb, int yb)
 	//7ème octant
 		if(-dY>dX)
 		{
-			count=dY;
-			currX=xa;
-			for(currY=ya;currY>=yb;currY--)
+			count = dY;
+			currX = xa;
+			for(currY=ya; currY>=yb; currY--)
 			{
-				I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+				tracerPixel(currX, currY);
 				if(count>0)
 				{
-					count=count-2*dX;
+					count = count - 2*dX;
 				}
 				else
 				{
 					currX++;
-					count=count-2*dX-2*dY;
+					count = count - 2*dX - 2*dY;
 				}
 			}
 		}
 		//8ème octant
 		else
 		{
-			count=dX;
-			currY=ya;
-			for(currX=xa;currX<=xb;currX++)
+			count = dX;
+			currY = ya;
+			for(currX=xa; currX<=xb; currX++)
 			{
-				I_plotColor(img,currX,currY,C_new(255.0f,255.0f,255.0f));
+				tracerPixel(currX, currY);
 				if(count>0)
 				{
-					count=count+2*dY;
+					count = count + 2*dY;
 				}
 				else
 				{
 					currY--;
-					count=count+2*dY+2*dX;
+					count = count + 2*dY + 2*dX;
 				}
 			}
 		}

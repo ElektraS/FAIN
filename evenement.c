@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
 #include "evenement.h"
 
 
@@ -10,6 +13,20 @@ listc nouveauSommet(listc l, int x, int y)
 	newElement->next = l;
 
 	return newElement;
+}
+
+
+void firstElement (listc l, int x, int y)
+{
+	if(l->next != NULL)
+	{
+		firstElement(l->next,x,y);
+	}
+	else 
+	{
+		x = l->x;
+		y = l->y;
+	}
 }
 
 

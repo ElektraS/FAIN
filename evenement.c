@@ -39,7 +39,7 @@ void mouseClick(int button, int state, int x, int y, listc l)
 	}
 }
 
-void keyboard_CB(unsigned char key, listc l)
+void keyboardC(unsigned char key, listc l)
 {
 	printf("key = %c = %d\n", key, key);
 	if(key==99)

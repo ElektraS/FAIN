@@ -8,12 +8,14 @@
 void display_CB()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3ub(20,0,0);
+    glColor3ub(0,0,0);
 
     glBegin(GL_POINTS);
     glColor3ub(255,255,255);
     glVertex2i(200,40);
     glVertex2i(40,200);
+
+    tracerDroite(200,40,40,200);
     glEnd();
     glutSwapBuffers();
 }

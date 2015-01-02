@@ -6,7 +6,7 @@
 void tracerPixel(int x, int y)
 {
 	glBegin(GL_POINTS);
-	glColor3f(0,0,0);
+	glColor3f(255,255,255);
 	glVertex2i(x,y);
 	glEnd();
 }

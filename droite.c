@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
 #include "droite.h"
 
 void tracerPixel(int x, int y)

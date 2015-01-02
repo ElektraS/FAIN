@@ -18,10 +18,11 @@ void display_CB()
     glutSwapBuffers();
 }
 
-void int main(int argc, char const *argv[])
+int main(int argc, char **argv)
 {
 	int largeur = 400, hauteur = 400;
     int windowPosX = 100, windowPosY = 10;
+    char *window_name = "Project";
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);
@@ -36,7 +37,7 @@ void int main(int argc, char const *argv[])
     glutInit(&argc, argv);
 
 	// Donner un nom à la fenetre
-    glutCreateWindow(argv[0]);
+    glutCreateWindow(window_name);
 
 	// Definition de la taille de la fenêtre pour OpenGL
     glViewport(0, 0, largeur, hauteur);

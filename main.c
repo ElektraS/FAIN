@@ -14,8 +14,24 @@ void afficher_points(list l)
         glVertex2i(l->x, l->y);
         if(l->next!=NULL)
         {
-            afficher_points(l->next);
+            if(l->id!=0) afficher_points(l->next);
         }  
+    }
+}
+
+void afficher_lignes(list l)
+{
+    if(l!=NULL)
+    {
+        if(l->next != NULL)
+        {
+            if(l->id!=0)
+            {
+                tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));
+                afficher_lignes(l->next);  
+            }   
+            else if(l->next !=NULL) tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));        
+        }
     }
 }
 
@@ -31,6 +47,7 @@ void display_CB()
         glBegin(GL_POINTS);
         glColor3ub(255,255,255);
         afficher_points(_currentSummits);
+        afficher_lignes(_currentSummits);
         glEnd();
     }
 
@@ -44,6 +61,25 @@ void mouse_CB(int button, int state, int x, int y)
         _currentSummits = nouveauSommet(_currentSummits,x,y);;
     }
     glutPostRedisplay(); 
+}
+
+void keyboard_CB(unsigned char key, int x, int y)
+{
+    printf("key = %c = %d\n", key, key);
+    if(key==67) //touche c : devient polygone
+    {
+        list firstElem;
+        firstElem = firstElement(_currentSummits);
+        if(firstElem != NULL)
+        {
+            firstElem->next = _currentSummits;
+            _currentSummits->prev = firstElem;
+
+        }      
+    }
+    if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
+
+    glutPostRedisplay();
 }
 
 int main(int argc, char **argv)
@@ -84,6 +120,7 @@ int main(int argc, char **argv)
 	// Definition de display_CB comme fonction à appeler pour l'affichage
     glutDisplayFunc(display_CB);
     glutMouseFunc(mouse_CB);
+    glutKeyboardFunc(keyboard_CB);
 
 	// Démarrage de la boucle d'attente des événements
     glutMainLoop();

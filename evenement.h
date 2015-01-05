@@ -6,9 +6,11 @@
 typedef struct element* list;
 struct element
 {
+	int id;
     int x;
     int y;
     list next;
+    list prev;
 };
 
 typedef struct point point;
@@ -20,7 +22,6 @@ struct point
 
 list nouveauSommet(list l, int x, int y);
 
-point firstElement(list l);
+list firstElement(list l);
 
-void keyboardC(unsigned char key, list l);
 

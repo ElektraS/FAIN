@@ -7,38 +7,41 @@ list nouveauSommet(list l, int x, int y)
 	list newElement = malloc(sizeof(struct element));
 	newElement->x=x;
 	newElement->y=y;
-
 	newElement->next = l;
+	newElement->prev = NULL;
+
+
+	if(l!=NULL)
+	{
+		newElement->next->prev = newElement;
+		newElement->id = newElement->next->id + 1;
+	}
+	else newElement->id = 0;
 
 	return newElement;
 }
 
 
-point firstElement(list l)
+list firstElement(list l)
 {
-	point res;
-	if(l->next != NULL)
+	if(l==NULL)
 	{
-		firstElement(l->next);
+		return NULL;
+	}
+	else if(l->next != NULL)
+	{
+		if(l->id!=0)
+		{
+			return firstElement(l->next);
+		}
+		else 
+		{
+			return l;
+		}	
 	}
 	else 
 	{
-		res.x = l->x;
-		res.y = l->y;
+		return l;
 	}
-	return res;
 }
 
-void keyboardC(unsigned char key, list l)
-{
-	printf("key = %c = %d\n", key, key);
-	if(key==99) //touche c : devient polygone
-	{
-		point firstElem;
-		firstElem = firstElement(l);
-		tracerDroite(firstElem.x, firstElem.y, l->x, l->y, Color_new(255, 255, 255));
-	}
-	if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
-
-	glutPostRedisplay();
-}

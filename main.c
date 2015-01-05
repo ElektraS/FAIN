@@ -7,6 +7,9 @@
 
 list _currentSummits = NULL;
 
+int can_add_summit = 1;
+int polygone_closed = 0;
+
 void afficher_points(list l)
 {
     if(l!=NULL)
@@ -56,7 +59,7 @@ void display_CB()
 
 void mouse_CB(int button, int state, int x, int y)
 {
-    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON)
+    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1)
     {
         _currentSummits = nouveauSommet(_currentSummits,x,y);;
     }
@@ -68,14 +71,30 @@ void keyboard_CB(unsigned char key, int x, int y)
     printf("key = %c = %d\n", key, key);
     if(key==99 || key==67) //touche c : devient polygone
     {
-        list firstElem;
-        firstElem = firstElement(_currentSummits);
-        if(firstElem != NULL)
+        if(polygone_closed==0)
         {
-            firstElem->next = _currentSummits;
-            _currentSummits->prev = firstElem;
-
-        }      
+            list firstElem;
+            firstElem = firstElement(_currentSummits);
+            if(firstElem != NULL)
+            {
+                firstElem->next = _currentSummits;
+                _currentSummits->prev = firstElem;
+            }   
+            polygone_closed = 1;
+            can_add_summit = 0;   
+        }
+        else
+        {
+            list firstElem;
+            firstElem = firstElement(_currentSummits);
+            if(firstElem != NULL)
+            {
+                firstElem->next = NULL;
+                _currentSummits ->prev = NULL;
+            }
+            polygone_closed = 0;
+            can_add_summit = 1;
+        }
     }
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
@@ -87,8 +106,6 @@ int main(int argc, char **argv)
 	int largeur = 400, hauteur = 400;
     int windowPosX = 100, windowPosY = 10;
     char *window_name = "Project";
-
-    Color currentColor = Color_new(255, 255, 255);
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);

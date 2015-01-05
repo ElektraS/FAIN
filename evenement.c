@@ -2,9 +2,9 @@
 #include "evenement.h"
 
 
-listc nouveauSommet(listc l, int x, int y)
+list nouveauSommet(list l, int x, int y)
 {
-	element * newElement = malloc(sizeof(element));
+	list newElement = malloc(sizeof(struct element));
 	newElement->x=x;
 	newElement->y=y;
 
@@ -14,40 +14,29 @@ listc nouveauSommet(listc l, int x, int y)
 }
 
 
-void firstElement(listc l, int x, int y)
+point firstElement(list l)
 {
+	point res;
 	if(l->next != NULL)
 	{
-		firstElement(l->next,x,y);
+		firstElement(l->next);
 	}
 	else 
 	{
-		x = l->x;
-		y = l->y;
+		res.x = l->x;
+		res.y = l->y;
 	}
+	return res;
 }
 
-
-void mouseClick(int button, int state, int x, int y, listc l)
-{
-	if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON)
-	{
-		fprintf(stderr,"Presser ");
-		nouveauSommet(l,x,y);
-		tracerDroite(x, y, l->next->x, l->next->y);
-		glutPostRedisplay();
-	}
-}
-
-void keyboardC(unsigned char key, listc l)
+void keyboardC(unsigned char key, list l)
 {
 	printf("key = %c = %d\n", key, key);
 	if(key==99)
 	{
-		int x;
-		int y;
-		firstElement(l, x, y);
-		tracerDroite(x, y, l->x, l->y);
+		point firstElem;
+		firstElem = firstElement(l);
+		tracerDroite(firstElem.x, firstElem.y, l->x, l->y, Color_new(255, 255, 255));
 	}
 	if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 

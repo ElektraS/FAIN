@@ -42,7 +42,7 @@ void mouseClick(int button, int state, int x, int y, listc l)
 void keyboardC(unsigned char key, listc l)
 {
 	printf("key = %c = %d\n", key, key);
-	if(key==99)
+	if(key==99) //touche c : devient polygone
 	{
 		int x;
 		int y;

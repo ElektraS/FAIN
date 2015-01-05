@@ -66,7 +66,7 @@ void mouse_CB(int button, int state, int x, int y)
 void keyboard_CB(unsigned char key, int x, int y)
 {
     printf("key = %c = %d\n", key, key);
-    if(key==67) //touche c : devient polygone
+    if(key==99 || key==67) //touche c : devient polygone
     {
         list firstElem;
         firstElem = firstElement(_currentSummits);

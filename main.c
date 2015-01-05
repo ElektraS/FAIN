@@ -15,7 +15,7 @@ void display_CB()
     glVertex2i(200,40);
     glVertex2i(40,200);
 
-    tracerDroite(200,40,40,200);
+    tracerDroite(200,40,40,200, Color_new(255,255,255));
     glEnd();
     glutSwapBuffers();
 }
@@ -25,6 +25,8 @@ int main(int argc, char **argv)
 	int largeur = 400, hauteur = 400;
     int windowPosX = 100, windowPosY = 10;
     char *window_name = "Project";
+
+    Color currentColor = Color_new(255, 255, 255);
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);

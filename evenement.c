@@ -32,7 +32,7 @@ point firstElement(list l)
 void keyboardC(unsigned char key, list l)
 {
 	printf("key = %c = %d\n", key, key);
-	if(key==99)
+	if(key==99) //touche c : devient polygone
 	{
 		point firstElem;
 		firstElem = firstElement(l);

@@ -23,3 +23,4 @@ list nouveauSommet(list l, int x, int y);
 point firstElement(list l);
 
 void keyboardC(unsigned char key, list l);
+

@@ -21,6 +21,7 @@ void tracerPixel(int x, int y, Color c)
 	glEnd();
 }
 
+//algorithme de Bresenham
 void tracerDroite(int xa, int ya, int xb, int yb, Color current_color)
 {
 	int count;

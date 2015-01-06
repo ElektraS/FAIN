@@ -37,13 +37,12 @@ void mouse_CB(int button, int state, int x, int y)
     {
         _currentSummits = nouveauSommet(_currentSummits,x,y);;
     }
-    printf("%i\n", mode);
     glutPostRedisplay(); 
 }
 
 void keyboard_CB(unsigned char key, int x, int y)
 {
-    printf("key = %c = %d\n", key, key);
+//    printf("key = %c = %d\n", key, key);
     if(mode == 1) // On est dans le mode append
     {
         if(key==99 || key==67) //touche c : devient polygone

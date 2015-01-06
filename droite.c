@@ -2,7 +2,6 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include "droite.h"
-#include "evenement.h"
 
 Color Color_new(float red, float green, float blue)
 {
@@ -11,6 +10,80 @@ Color Color_new(float red, float green, float blue)
 	c._green = green;
 	c._blue = blue;
 	return c;
+}
+
+list nouveauSommet(list l, int x, int y)
+{
+	list newElement = malloc(sizeof(struct element));
+	newElement->x=x;
+	newElement->y=y;
+	newElement->next = l;
+	newElement->prev = NULL;
+
+
+	if(l!=NULL)
+	{
+		newElement->next->prev = newElement;
+		newElement->id = 1;
+	}
+	else newElement->id = 0;
+
+	return newElement;
+}
+
+
+list firstElement(list l)
+{
+	if(l==NULL)
+	{
+		return NULL;
+	}
+	else if(l->next != NULL)
+	{
+		if(l->id!=0)
+		{
+			return firstElement(l->next);
+		}
+		else 
+		{
+			return l;
+		}	
+	}
+	else 
+	{
+		return l;
+	}
+}
+
+list supprimerSommet(list l)
+{
+	if(l==NULL)
+	{
+		return NULL;
+	}
+	else if(l->id != 0)
+	{
+		if(l->prev != NULL)
+		{
+			l->next->prev = l->prev;
+			l->prev->next = l->next;
+		}
+		else l->next->prev = l->prev;
+	}
+	else 
+	{
+		if(l->prev != NULL)
+		{
+			l->prev->id = 0;
+			l->prev->next = l->next;	
+		}
+		else if(l->next != NULL)
+		{
+			l->next->id=0;
+			l->next->prev = l->prev;
+		}
+	}
+	return l;
 }
 
 void tracerPixel(int x, int y, Color c)
@@ -199,4 +272,32 @@ void tracerDroite(int xa, int ya, int xb, int yb, Color current_color)
 			}
 		}
 	}
+}
+
+void afficher_points(list l)
+{
+    if(l!=NULL)
+    {
+        glVertex2i(l->x, l->y);
+        if(l->next!=NULL)
+        {
+            if(l->id!=0) afficher_points(l->next);
+        }  
+    }
+}
+
+void afficher_lignes(list l)
+{
+    if(l!=NULL)
+    {
+        if(l->next != NULL)
+        {
+            if(l->id!=0)
+            {
+                tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));
+                afficher_lignes(l->next);  
+            }   
+            else if(l->next !=NULL) tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));        
+        }
+    }
 }

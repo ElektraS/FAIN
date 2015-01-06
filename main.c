@@ -3,40 +3,14 @@
 #include <GL/gl.h>
 
 #include "droite.h"
-#include "evenement.h"
 
 list _currentSummits = NULL;
 
+int id_nbr = 0;
 int can_add_summit = 1;
 int polygone_closed = 0;
 
-void afficher_points(list l)
-{
-    if(l!=NULL)
-    {
-        glVertex2i(l->x, l->y);
-        if(l->next!=NULL)
-        {
-            if(l->id!=0) afficher_points(l->next);
-        }  
-    }
-}
-
-void afficher_lignes(list l)
-{
-    if(l!=NULL)
-    {
-        if(l->next != NULL)
-        {
-            if(l->id!=0)
-            {
-                tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));
-                afficher_lignes(l->next);  
-            }   
-            else if(l->next !=NULL) tracerDroite(l->x, l->y, l->next->x, l->next->y, Color_new(255,255,255));        
-        }
-    }
-}
+int mode = 1;
 
 void display_CB()
 {
@@ -59,43 +33,59 @@ void display_CB()
 
 void mouse_CB(int button, int state, int x, int y)
 {
-    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1)
+    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1 && mode == 1)
     {
         _currentSummits = nouveauSommet(_currentSummits,x,y);;
     }
+    printf("%i\n", mode);
     glutPostRedisplay(); 
 }
 
 void keyboard_CB(unsigned char key, int x, int y)
 {
     printf("key = %c = %d\n", key, key);
-    if(key==99 || key==67) //touche c : devient polygone
+    if(mode == 1) // On est dans le mode append
     {
-        if(polygone_closed==0)
+        if(key==99 || key==67) //touche c : devient polygone
         {
-            list firstElem;
-            firstElem = firstElement(_currentSummits);
-            if(firstElem != NULL)
+            if(polygone_closed==0)
             {
-                firstElem->next = _currentSummits;
-                _currentSummits->prev = firstElem;
-            }   
-            polygone_closed = 1;
-            can_add_summit = 0;   
-        }
-        else
-        {
-            list firstElem;
-            firstElem = firstElement(_currentSummits);
-            if(firstElem != NULL)
-            {
-                firstElem->next = NULL;
-                _currentSummits ->prev = NULL;
+                list firstElem;
+                firstElem = firstElement(_currentSummits);
+                if(firstElem != NULL)
+                {
+                    firstElem->next = _currentSummits;
+                    _currentSummits->prev = firstElem;
+                }   
+                polygone_closed = 1;
+                can_add_summit = 0;   
             }
-            polygone_closed = 0;
-            can_add_summit = 1;
+            else
+            {
+                list firstElem;
+                firstElem = firstElement(_currentSummits);
+                if(firstElem != NULL)
+                {
+                    firstElem->next = NULL;
+                    _currentSummits ->prev = NULL;
+                }
+                polygone_closed = 0;
+                can_add_summit = 1;
+            }
         }
     }
+    else if (mode == 2) // Quand on est dans le mode vertex
+    {
+
+    }
+    else if (mode == 3) // Quand on est dans le mode edge
+    {
+        /* code */
+    }
+
+    if(key== 97 || key ==65) mode = 1;
+    if (key == 118 || key == 86) mode = 2;
+    if (key == 101 || key == 69) mode = 3;
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
     glutPostRedisplay();

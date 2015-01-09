@@ -129,29 +129,13 @@ void intersection(int y, int x1, int y1, int x2, int y2, int *resx, int *resy)
 }
 
 
-//-------------------------------------------------------------
-//pointeur sur le début de liste
-list pointeur_debut(list l)
-{
-  	list res = l;
-  	if(l != NULL)
-  	{
-  		while(res->prev != NULL)
-  		{
-  			res = res->prev;
-  		}
-  	}
-  	return res;
-}
-
-
 //---------------------------------------------------------------------------------------
 //détermination de l'appartenance d'un point à l'intérieur d'un polygone
 int in_polygone(int x, int y, list l)
 {
 	int nb_intersection = 0; //nombre d'intersection avec les segments hors extremité
 	float nb_inter_sommet = 0.0; //nombre d'intersection avec des sommets inférieurs de segment
-	list temp = pointeur_debut(l); //temp est un pointeur initialisé en début de liste
+	list temp = firstElement(l); //temp est un pointeur initialisé en début de liste
 	int xs;
 	int ys;
 	while((temp != NULL) && (temp->next != NULL))//tant que temp à un suivant 
@@ -188,16 +172,33 @@ int in_polygone(int x, int y, list l)
 void scanline(list l, Color c)
 {
   	printf("in\n");
-
+  	list temp = firstElement(l);
 	//calcul du cadre
 	int xmin = 0;
-	calc_x_min(l, xmin);
-	int xmax = 400;
-	calc_x_max(l, xmax);
-	int ymin = 0; 
-	calc_y_min(l, ymin);
-	int ymax = 400;
-	calc_y_max(l,ymax);
+	int xmax = 0;
+	int ymin = 0;
+	int ymax = 0;
+
+	while(temp != NULL)
+	{
+		if(temp->x < xmin)
+		{
+			xmin = temp->x;
+		}
+		if(temp->x > xmax)
+		{
+			xmax = temp->x;
+		}
+		if(temp->y < ymin)
+		{
+			ymin = temp->y;
+		}
+		if(temp->y > ymax)
+		{
+			ymax = temp->y;
+		}
+		temp=temp->next;
+	}
 
 	//coloriage du polygone dans le cadre
 	printf("cadre : X:%d - %d Y: %d - %d\n",xmin ,xmax ,ymin ,ymax);

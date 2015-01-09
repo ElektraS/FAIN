@@ -88,23 +88,29 @@ list supprimerSommet(list l)
 	}
 	else if(l->id != 0)
 	{
-		l->next->prev = l->prev;
-		l->prev->next = l->next;
+		tmp = l->prev;
+		tmp->next = l->next;
+		l->next->prev = tmp;
+		return l->next;		
 	}
 	else 
 	{
 		if(l->prev != NULL)
 		{
 			l->prev->id = 0;
-			l->prev->next = l->next;	
+			l->prev->next = l->next;
+			tmp = l->prev;	
 		}
 		else if(l->next != NULL)
 		{
 			l->next->id=0;
-			l->next->prev = l->prev;
+			l->next->prev = NULL;
+			tmp = l->next;
 		}
+		else tmp = NULL;
 	}
-	return l;
+	free(l);
+	return tmp;	
 }
 
 list next_Summit(list l)

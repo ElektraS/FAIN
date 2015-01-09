@@ -88,7 +88,8 @@ void keyboard_CB(unsigned char key, int x, int y)
     }
     else if (mode == VERTEX) // Quand on est dans le mode vertex
     {
-        if(key == 8 || key == 127) //Si on appuie sur la touche suppr ou la touche delete
+        if((key == 8 || key == 127) && nb_Summit(_currentSummits, 0) >= 2) 
+        //Si on appuie sur la touche suppr ou la touche delete à condition d'avoir au moins 2 sommets 
         {
             _currentSummits = supprimerSommet(_currentSummits);
         }

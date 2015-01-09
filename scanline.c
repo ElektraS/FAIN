@@ -204,16 +204,17 @@ void scanline(list l, Color c)
 
 	//coloriage du polygone dans le cadre
 	printf("cadre : X:%d - %d Y: %d - %d\n",xmin ,xmax ,ymin ,ymax);
-	int i,j;
-	int x;
-	int y;
+	int i;
+	int j;
+	int xs;
+	int ys;
 	for(i=xmin ; i<=xmax ; i++)
 	{
 		for(j=ymin ; j<=ymax ; j++)
 		{
-			x=i;
-			y=j;
-			if( in_polygone(x, y, l) )
+			xs = i;
+			ys = j;
+			if( in_polygone(xs, ys, l) )
 			{
 				plot_point(i, j, c);
 				printf("color affect %d %d\n",i,j);
@@ -288,11 +289,12 @@ void scanline2(list l, Color c)
   	printf("in\n");
   	list temp = firstElement(l);
 	//calcul du cadre
-	int xmin = calc_x_min(l, 0);
-	int xmax = calc_x_max(l, 0);
-	int ymin = calc_y_min(l, 0);
-	int ymax = calc_y_max(l, 0);
-	while(temp != NULL && temp->id !=0)
+	int xmin = 400;
+	int xmax = 0;
+	int ymin = 400;
+	int ymax = 0;
+
+	while(temp != NULL && temp->next->id != 0)
 	{
 		if(temp->x < xmin)
 		{

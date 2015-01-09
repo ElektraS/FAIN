@@ -38,6 +38,8 @@ int nb_Summit(list l, int a);
 
 list supprimerSommet(list l);
 
+list add_summit(list l, int x, int y);
+
 Color Color_new(float red, float green, float blue);
 
 list next_Summit(list l);

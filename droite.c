@@ -89,10 +89,23 @@ list supprimerSommet(list l)
 	}
 	else if(l->id != 0)
 	{
-		tmp = l->prev;
-		tmp->next = l->next;
-		l->next->prev = tmp;
-		return l->next;		
+		if(l->prev != NULL && l->next != NULL)
+		{
+			tmp = l->prev;
+			tmp->next = l->next;
+			l->next->prev = tmp;
+			tmp = l->next;	
+		}	
+		else if(l->prev == NULL)
+		{
+			l->next->prev = NULL;
+			tmp = l->next;
+		}
+		else 
+		{
+			l->prev->next = l->next;
+			tmp = l->prev;
+		}		
 	}
 	else 
 	{
@@ -112,6 +125,42 @@ list supprimerSommet(list l)
 	}
 	free(l);
 	return tmp;	
+}
+
+list add_summit(list l, int x, int y)
+{
+	list res/* = malloc(sizeof(struct element))*/;
+	list tmp;
+	if(l==NULL)
+	{
+		return nouveauSommet(l, x, y);
+	}
+
+	/*tmp->x = x;
+	tmp->y = y;*/
+	if(l != NULL && l->next != NULL)
+	{
+		/*if(l->id == 0) 
+		{
+			l->id = 1;
+			tmp->id =0;
+		}
+		tmp->next = l->next;
+		tmp->prev = l;
+		l->next->prev = tmp;
+		l->next = tmp;*/
+		tmp = l->prev;
+		res =nouveauSommet(l, x,y);
+		res->prev = tmp;
+		tmp->next = res;
+
+	
+	}	
+	else
+	{
+		//tmp->prev = l;
+	}
+	return res;	
 }
 
 list next_Summit(list l)

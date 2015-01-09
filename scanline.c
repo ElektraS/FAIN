@@ -175,13 +175,13 @@ void scanline(list l, Color c)
   	list temp;
   	temp = firstElement(l);
 	//calcul du cadre
-	int xmin = calc_x_min(l, 0);
-	int xmax = calc_x_max(l, 0);
-	int ymin = calc_y_min(l, 0);
-	int ymax = calc_y_max(l, 0);
+	int xmin = 400;
+	int xmax = 0;
+	int ymin = 400;
+	int ymax = 0;
 
 
-	while(temp != NULL && temp->id != 0)
+	while(temp != NULL && temp->next->id != 0)
 	{
 		if(temp->x < xmin)
 		{

@@ -4,6 +4,7 @@
 
 #include "droite.h"
 #include "plot.h"
+#include "scanline.h"
 
 #define APPEND 1
 #define VERTEX 2
@@ -117,6 +118,7 @@ void keyboard_CB(unsigned char key, int x, int y)
     if ((key == 118 || key == 86) && polygone_closed == 1 && 
         (nb_Summit(_currentSummits, 0) > 1)) mode = VERTEX; 
     if ((key == 101 || key == 69) && polygone_closed == 1) mode = EDGE;
+    if((key == 70 || key == 102) && polygone_closed == 1 ) scanline(_currentSummits, _selectColor);
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
     glutPostRedisplay();

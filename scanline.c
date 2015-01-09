@@ -5,6 +5,9 @@
 #include "scanline.h"
 #include <math.h>
 
+#include "droite.h"
+#include "plot.h"
+
 
 
 //--------------------------------------------

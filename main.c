@@ -16,7 +16,6 @@ int can_add_summit = 1;
 int polygone_closed = 0;
 
 Color _currentColor; 
-Color _selectColor;
 
 int mode = APPEND;
 
@@ -35,17 +34,9 @@ void display_CB()
             plot_square(_currentSummits->x, _currentSummits->y, 10, Color_new(255, 0, 0));
             plot_square(_currentSummits->x, _currentSummits->y, 15, Color_new(255, 0, 0));
         }
-        if(mode == EDGE)
-        {
-            afficher_lignes(_currentSummits, _currentColor, _selectColor); 
-        }
-        if(mode == VERTEX || mode == APPEND)
-        {
-            afficher_points(_currentSummits, _currentColor);
-            afficher_lignes(_currentSummits, _currentColor, _currentColor); 
-        }
         glColor3ub(255,255,255);
-        
+        afficher_points(_currentSummits, _currentColor);
+        afficher_lignes(_currentSummits, _currentColor);
 
         glEnd();
     }
@@ -148,19 +139,25 @@ void special_CB(int key, int x, int y)
                   }
                 break;
         case GLUT_KEY_PAGE_DOWN : 
-               if( mode == VERTEX || mode == EDGE)
+               if( mode == VERTEX )
                {
                    
                     _currentSummits = previous_Summit(_currentSummits);
                }
-                break;
+               /*else if( MODE == EDGE )
+               {
+                current_courbe=prec_BCourbe(current_courbe);
+               } */break;
 
         case GLUT_KEY_PAGE_UP : 
-               if( mode == VERTEX || mode == EDGE)
+               if( mode == VERTEX )
                {
                     _currentSummits = next_Summit(_currentSummits);
                } 
-                break;
+               /*else if( MODE == EDGE )
+               {
+                current_courbe=next_BCourbe(current_courbe);
+               } */break;
 
 
         //default : fprintf(stderr,"special_CB : %d : unknown key.\n",key);
@@ -174,7 +171,6 @@ int main(int argc, char **argv)
     int windowPosX = 100, windowPosY = 10;
     char *window_name = "Project";
     _currentColor = Color_new(255, 255, 255);
-    _selectColor = Color_new(255, 0, 0);
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);

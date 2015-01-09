@@ -175,9 +175,9 @@ void scanline(list l, Color c)
   	list temp;
   	temp = firstElement(l);
 	//calcul du cadre
-	int xmin = 0;
+	int xmin = 400;
 	int xmax = 0;
-	int ymin = 0;
+	int ymin = 400;
 	int ymax = 0;
 
 	while(temp != NULL && temp->id != 0)
@@ -287,11 +287,11 @@ void scanline2(list l, Color c)
   	printf("in\n");
   	list temp = firstElement(l);
 	//calcul du cadre
-	int xmin = 0 ;
-	int xmax = 0 ;
-	int ymin = 0 ; 
-	int ymax = 0 ;
-	while(temp != NULL && temp->id !=0)
+	int xmin = 400;
+	int xmax = 0;
+	int ymin = 400; 
+	int ymax = 0;
+	while(temp != NULL && temp->id != 0)
 	{
 		if(temp->x < xmin)
 		{

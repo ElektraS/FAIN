@@ -55,7 +55,7 @@ void mouse_CB(int button, int state, int x, int y)
 
 void keyboard_CB(unsigned char key, int x, int y)
 {
-    printf("key = %d\n", key);
+   // printf("key = %d\n", key);
     if(mode == APPEND) // On est dans le mode append
     {
         if(key==99 || key==67) //touche c : devient polygone
@@ -99,42 +99,45 @@ void keyboard_CB(unsigned char key, int x, int y)
     }
 
     if(key== 97 || key ==65) mode = APPEND; //
-    if (key == 118 || key == 86) mode = VERTEX;
-    if (key == 101 || key == 69) mode = EDGE;
+    if ((key == 118 || key == 86) && polygone_closed == 1) mode = VERTEX; //Si le polygone est fermé 
+    //on peut utiliser le mode VERTEX !
+    if ((key == 101 || key == 69) && polygone_closed == 1) mode = EDGE;
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
     glutPostRedisplay();
 }
 
-/*void special_CB(int key, int x, int y)
+void special_CB(int key, int x, int y)
 {
     switch(key)
     {
         case GLUT_KEY_PAGE_DOWN : 
                if( mode == VERTEX )
                {
+                   
                     _currentSummits = previous_Summit(_currentSummits);
                }
-               else if( MODE == EDGE )
+               /*else if( MODE == EDGE )
                {
                 current_courbe=prec_BCourbe(current_courbe);
-               } break;
+               } */break;
 
         case GLUT_KEY_PAGE_UP : 
                if( mode == VERTEX )
                {
+                    printf("touche page haut");
                     _currentSummits = next_Summit(_currentSummits);
                } 
-               else if( MODE == EDGE )
+               /*else if( MODE == EDGE )
                {
                 current_courbe=next_BCourbe(current_courbe);
-               } break;
+               } */break;
 
 
-    default : fprintf(stderr,"special_CB : %d : unknown key.\n",key);
+        //default : fprintf(stderr,"special_CB : %d : unknown key.\n",key);
     }
     glutPostRedisplay();
-}*/
+}
 
 int main(int argc, char **argv)
 {
@@ -174,7 +177,7 @@ int main(int argc, char **argv)
     glutDisplayFunc(display_CB);
     glutMouseFunc(mouse_CB);
     glutKeyboardFunc(keyboard_CB);
-    //glutSpecialFunc(special_CB);
+    glutSpecialFunc(special_CB);
 
 	// Démarrage de la boucle d'attente des événements
     glutMainLoop();

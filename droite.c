@@ -54,21 +54,48 @@ list firstElement(list l)
 		return l;
 	}
 }
+int nb_Summit(list l, int a)
+{
+	int res;
+	res = a;
+	if(l==NULL)
+	{
+		return a + 0;
+	}
+	else if(l->next != NULL)
+	{
+		if(l->id!=0)
+		{
+			return nb_Summit(l->next, res + 1);
+		}
+		else 
+		{
+			return res;
+		}	
+	}
+	else 
+	{
+		return res;
+	}
+}
 
 list supprimerSommet(list l)
 {
+	list tmp;
 	if(l==NULL)
 	{
 		return NULL;
 	}
 	else if(l->id != 0)
 	{
-		if(l->prev != NULL)
+		if(l->prev != NULL && l->next != NULL)
 		{
+			tmp = l->next;
 			l->next->prev = l->prev;
 			l->prev->next = l->next;
 		}
-		else l->next->prev = l->prev;
+		else if(l->prev == NULL)
+			l->next->prev = l->prev;
 	}
 	else 
 	{

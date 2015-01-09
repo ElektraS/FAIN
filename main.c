@@ -55,10 +55,10 @@ void mouse_CB(int button, int state, int x, int y)
 
 void keyboard_CB(unsigned char key, int x, int y)
 {
-   // printf("key = %d\n", key);
+    printf("key = %c = %d\n", key, key);
     if(mode == APPEND) // On est dans le mode append
     {
-        if(key==99 || key==67) //touche c : devient polygone
+        if((key==99 || key==67) &&  nb_Summit(_currentSummits, 0) >= 2) //touche c : devient polygone
         {
             if(polygone_closed==0)
             {
@@ -88,19 +88,19 @@ void keyboard_CB(unsigned char key, int x, int y)
     }
     else if (mode == VERTEX) // Quand on est dans le mode vertex
     {
-        
-        if(key == 103) _currentSummits=next_Summit(_currentSummits);
-        else if(key == 104) _currentSummits=previous_Summit(_currentSummits);
-
+        if(key == 8 || key == 127) //Si on appuie sur la touche suppr ou la touche delete
+        {
+            _currentSummits = supprimerSommet(_currentSummits);
+        }
     }
     else if (mode == EDGE) // Quand on est dans le mode edge
     {
         /* code */
     }
 
-    if(key== 97 || key ==65) mode = APPEND; //
-    if ((key == 118 || key == 86) && polygone_closed == 1) mode = VERTEX; //Si le polygone est fermé 
-    //on peut utiliser le mode VERTEX !
+    if(key== 97 || key ==65) mode = APPEND; 
+    //Si le polygone est fermé on peut utiliser le mode VERTEX !
+    if ((key == 118 || key == 86) && polygone_closed == 1) mode = VERTEX; 
     if ((key == 101 || key == 69) && polygone_closed == 1) mode = EDGE;
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
@@ -125,7 +125,6 @@ void special_CB(int key, int x, int y)
         case GLUT_KEY_PAGE_UP : 
                if( mode == VERTEX )
                {
-                    printf("touche page haut");
                     _currentSummits = next_Summit(_currentSummits);
                } 
                /*else if( MODE == EDGE )

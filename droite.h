@@ -34,6 +34,8 @@ list nouveauSommet(list l, int x, int y);
 
 list firstElement(list l);
 
+int nb_Summit(list l, int a);
+
 list supprimerSommet(list l);
 
 Color Color_new(float red, float green, float blue);

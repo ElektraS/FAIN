@@ -172,7 +172,8 @@ int in_polygone(int x, int y, list l)
 void scanline(list l, Color c)
 {
   	printf("in\n");
-  	list temp = firstElement(l);
+  	list temp;
+  	temp = firstElement(l);
 	//calcul du cadre
 	int xmin = 0;
 	int xmax = 0;
@@ -218,5 +219,110 @@ void scanline(list l, Color c)
 			}
 		}
 	}
+	printf("out\n");
+}
+
+
+//-----------------------------------------------------------------------------------------------------
+//tableau des intersections du polygone avec une droite horizontale
+//renvoie le nombre d'intersection trouvé (forcément paire si le polygone est fermé) 
+int intersection_table(Table *t,int y,list l)
+{
+	int nb_intersection = 0; //initialisation du nombre d'intersections à 0
+	list temp = firstElement(l); //pointeur en début de liste
+	int xs,ys;
+	while((temp != NULL) && (temp->next != NULL)) //tant qu'il y a un suivant non vide
+	{
+		intersection(y, temp->x, temp->y, temp->next->x, temp->next->y, &xs, &ys); //calcul de la première intersection
+		if(xs != -1) //si elle existe
+		{
+			if((y == temp->y) && (y < temp->next->y))
+			{
+				(*t)[nb_intersection] = xs; //ajout au tableau
+				nb_intersection++; //sommet inf
+			}
+			else if((y == temp->next->y) && (y < temp->y))
+			{
+				(*t)[nb_intersection] = xs; //ajout au tableau
+				nb_intersection++; //sommet inf
+			}
+			else if ( !( (y == temp->next->y)||(y == temp->y) ) )
+			{
+				(*t)[nb_intersection] = xs; //ajout au tableau
+				nb_intersection++; //sur la demi-droite dans le segment
+			}
+		}
+		temp = temp->next; //décalage du pointeur 
+	}
+	return nb_intersection;
+}
+
+
+//---------------------------------------------------------
+//tri croissant naif des élément entre deb et size-1
+void T_tri(Table *t,int deb,int size)
+{
+	if(deb < size-1){
+
+		int temp,i;
+		for(i=deb ; i<size ; i++)
+		{
+			if((*t)[deb] > (*t)[i])
+			{
+				temp = (*t)[deb];
+				(*t)[deb] = (*t)[i];
+				(*t)[i] = temp;
+			}
+		}
+		T_tri(t, deb+1, size);
+
+	}
+}
+
+
+
+//coloriage de polygone
+void scanline2(list l, Color c)
+{
+  	printf("in\n");
+  	list temp = firstElement(l);
+	//calcul du cadre
+	int xmin = 0 ;
+	int xmax = 0 ;
+	int ymin = 0 ; 
+	int ymax = 0 ;
+	while(temp != NULL)
+	{
+		if(temp->x < xmin)
+		{
+			xmin = temp->x;
+		}
+		if(temp->x > xmax)
+		{
+			xmax = temp->x;
+		}
+		if(temp->y < ymin)
+		{
+			ymin = temp->y;
+		}
+		if(temp->y > ymax)
+		{
+			ymax = temp->y;
+		}
+		temp = temp->next;
+	}
+	//coloriage du polygone dans le cadre
+	printf("cadre : X:%d - %d Y: %d - %d\n", xmin, xmax, ymin, ymax);
+	int n,i,j;
+	Table TAB = malloc(ymax+1);
+	for(j=ymin ; j<=ymax ; j++)
+		{
+			n = intersection_table(&TAB,j,l);
+			T_tri(&TAB,0,n);
+			for(i=0 ; i<n-1 ; i=i+2)
+			{
+				tracerDroite(TAB[i], j, TAB[i+1], j, c);
+			}
+		}
 	printf("out\n");
 }

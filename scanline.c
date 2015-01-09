@@ -138,7 +138,7 @@ int in_polygone(int x, int y, list l)
 	list temp = firstElement(l); //temp est un pointeur initialisé en début de liste
 	int xs;
 	int ys;
-	while((temp != NULL) && (temp->next != NULL))//tant que temp à un suivant 
+	while(((temp != NULL) && (temp->next != NULL)) || temp->id != 0)//tant que temp à un suivant 
 	{ 
 		//on cherche une intersection avec la première arête 
 		intersection(y, temp->x, temp->y, temp->next->x, temp->next->y, &xs, &ys);
@@ -181,7 +181,7 @@ void scanline(list l, Color c)
 	int ymax = calc_y_max(l, 0);
 
 
-	while(temp != NULL && temp->id != 0)
+	while(temp != NULL || temp->id != 0)
 	{
 		if(temp->x < xmin)
 		{
@@ -232,7 +232,7 @@ int intersection_table(Table *t,int y,list l)
 	int nb_intersection = 0; //initialisation du nombre d'intersections à 0
 	list temp = firstElement(l); //pointeur en début de liste
 	int xs,ys;
-	while((temp != NULL) && (temp->next != NULL)) //tant qu'il y a un suivant non vide
+	while(((temp != NULL) && (temp->next != NULL)) || temp->id !=0) //tant qu'il y a un suivant non vide
 	{
 		intersection(y, temp->x, temp->y, temp->next->x, temp->next->y, &xs, &ys); //calcul de la première intersection
 		if(xs != -1) //si elle existe
@@ -292,7 +292,7 @@ void scanline2(list l, Color c)
 	int xmax = calc_x_max(l, 0);
 	int ymin = calc_y_min(l, 0);
 	int ymax = calc_y_max(l, 0);
-	while(temp != NULL && temp->id !=0)
+	while(temp != NULL || temp->id !=0)
 	{
 		if(temp->x < xmin)
 		{

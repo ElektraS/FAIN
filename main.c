@@ -6,6 +6,7 @@
 #include "plot.h"
 #include "scanline.h"
 
+
 #define APPEND 1
 #define VERTEX 2
 #define EDGE 3
@@ -56,9 +57,20 @@ void display_CB()
 
 void mouse_CB(int button, int state, int x, int y)
 {
-    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1 && mode == APPEND)
+    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON )
     {
-        _currentSummits = nouveauSommet(_currentSummits,x,y);
+        if(can_add_summit == 1 && mode == APPEND)
+        {
+           _currentSummits = nouveauSommet(_currentSummits,x,y); 
+        }
+        else if (mode == VERTEX)
+        {
+            _currentSummits = MoveSummit(_currentSummits, closestVertex(_currentSummits, x, y, NULL, 20000));
+        }
+        else if (mode == EDGE)
+        {
+            _currentSummits = MoveSummit( _currentSummits, closestVertex(_currentSummits, x, y, NULL, 20000));
+        }
     }
     if(state == GLUT_DOWN && button == GLUT_MIDDLE_BUTTON && mode == EDGE)
     {

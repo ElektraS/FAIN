@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include "droite.h"
 #include "plot.h"
+#include <math.h>
 
 Color Color_new(float red, float green, float blue)
 {
@@ -234,7 +235,111 @@ void select_edge(list l, Color select_color, Color current_color)
 		{
 			tracerDroite(l->x, l->y, l->next->x, l->next->y, current_color);
 		}
-	} 
+	} 	
+}
 
-		
+list closestVertex(list l, int x, int y, list res, double sdis)
+{
+	if(l ==NULL)
+	{
+		return res;
+	}
+	else if(l->id != 0)
+	{
+		if (distanceBetweenPoints(l->x, l->y, x, y) < sdis)
+		{
+			return closestVertex(l->next, x, y, l, distanceBetweenPoints(l->x, l->y, x, y));
+		}
+		else return closestVertex(l->next, x, y, res, sdis);
+	}
+	else 
+	{
+		if (distanceBetweenPoints(l->x, l->y, x, y) < sdis)
+		{
+			return l;
+		}
+		else 
+		{
+			return res;
+		}
+	}
+}
+
+double distanceBetweenPoints(int xa, int ya, int xb, int yb)
+{
+	double tmp = 0;
+    tmp =  pow(xb - xa, 2) + pow(yb - ya, 2);
+    return sqrt(tmp);
+}
+
+list MoveSummit(list l, list target)
+{
+	if(l == NULL)
+	{
+		return NULL;
+	}
+	else if (l != target)
+	{
+		return MoveSummit(next_Summit(l), target);
+	}
+	else return target;
+}
+
+double distanceBetweenPointAndSegment(int xp, int yp, int xa, int ya, int xb, int yb)
+{
+	int vpax = xa - xp;
+	int vpay = ya - yp;
+	int vabx = xa - xb;
+	int vaby= ya - yb;
+
+	float dot = vpax * vabx + vpay * vaby;
+	float dist = vabx * vabx + vpay * vpay;
+	float param = dot / dist;
+
+	int x = 0;
+	int y = 0;
+	if(param < 0)
+	{
+		x=xa;
+		y=ya;
+	}
+	else if(param > 1)
+	{
+		x=xb;
+		y=yb;
+	}
+	else 
+	{
+		x = xa + param * (xb-xa);
+		y = ya + param * (yb-ya);
+	}
+	return distanceBetweenPoints(xp, yp, x, y);
+}
+
+list closestEdge(list l, int x, int y, list res, double sdis)
+{
+
+	if(l ==NULL)
+	{
+		return res;
+	}
+	else if(l->id != 0)
+	{
+		if (distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y) < sdis)
+		{
+			return closestEdge(l->next, x, y, l, distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y));
+		}
+		else return closestEdge(l->next, x, y, res, sdis);
+	}
+	else 
+	{
+		if (distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y) < sdis)
+		{
+			return l;
+		}
+		else 
+		{
+			return res;
+		}
+	}
 }

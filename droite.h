@@ -1,3 +1,6 @@
+#ifndef DROITE_H
+#define DROITE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/gl.h>
@@ -18,6 +21,7 @@ struct element
     list prev;
 };
 
+
 typedef struct point point;
 struct point
 {
@@ -25,16 +29,13 @@ struct point
 	int y;
 };
 
+
 list nouveauSommet(list l, int x, int y);
 
 list firstElement(list l);
 
-void tracerPixel(int x, int y, Color c);
-
-void tracerDroite(int xa, int ya, int xb, int yb, Color current_color);
+list supprimerSommet(list l);
 
 Color Color_new(float red, float green, float blue);
 
-void afficher_points(list l);
-
-void afficher_lignes(list l);
+#endif

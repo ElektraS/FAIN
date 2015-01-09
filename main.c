@@ -3,12 +3,15 @@
 #include <GL/gl.h>
 
 #include "droite.h"
+#include "plot.h"
 
 list _currentSummits = NULL;
 
 int id_nbr = 0;
 int can_add_summit = 1;
 int polygone_closed = 0;
+
+Color _currentColor; 
 
 int mode = 1;
 
@@ -23,8 +26,9 @@ void display_CB()
     {
         glBegin(GL_POINTS);
         glColor3ub(255,255,255);
-        afficher_points(_currentSummits);
-        afficher_lignes(_currentSummits);
+        afficher_points(_currentSummits, _currentColor);
+        afficher_lignes(_currentSummits, _currentColor);
+        plot_square(_currentSummits->x, _currentSummits->y, 10, Color_new(255, 0, 0));
         glEnd();
     }
 
@@ -35,7 +39,7 @@ void mouse_CB(int button, int state, int x, int y)
 {
     if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1 && mode == 1)
     {
-        _currentSummits = nouveauSommet(_currentSummits,x,y);;
+        _currentSummits = nouveauSommet(_currentSummits,x,y);
     }
     glutPostRedisplay(); 
 }
@@ -95,6 +99,7 @@ int main(int argc, char **argv)
 	int largeur = 400, hauteur = 400;
     int windowPosX = 100, windowPosY = 10;
     char *window_name = "Project";
+    _currentColor = Color_new(255, 255, 255);
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);

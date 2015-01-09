@@ -180,6 +180,7 @@ void scanline(list l, Color c)
 	int ymin = calc_y_min(l, 0);
 	int ymax = calc_y_max(l, 0);
 
+
 	while(temp != NULL && temp->id != 0)
 	{
 		if(temp->x < xmin)

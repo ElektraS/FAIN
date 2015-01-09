@@ -36,9 +36,13 @@ MODE APPEND
 
 MODE VERTEX
 
->
+> clic gauche pour changer de sommet 
+
+> touche suppr ou delete supprime le sommet selectionné 
 
 
 MODE EDGE
 
->
+> clic gauche pour selectionner une nouvelle arêtes
+
+> clic du milieu pour ajouter un sommet et deux nouvelles arêtes

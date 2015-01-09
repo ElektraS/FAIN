@@ -86,4 +86,37 @@ list supprimerSommet(list l)
 	return l;
 }
 
+list next_Summit(list l)
+{
+	list tmp;
+	if(l!=NULL)
+	{
+		if(l->next != NULL)
+			{
+				tmp = firstElement(l);
+				tmp->id = 1;
+				tmp->next->id = 0;
+				return l->next;
+			}
+		else return l;
+	}
+	else return l;
+}
+
+list previous_Summit(list l)
+{
+	list tmp;
+	if(l!=NULL)
+	{
+		if(l->prev != NULL) 
+			{
+				tmp = firstElement(l);
+				tmp->id = 1;
+				tmp->prev->id = 0;
+				return l->prev;
+			}
+		else return l;
+	}
+	else return NULL;
+}
 

@@ -38,4 +38,8 @@ list supprimerSommet(list l);
 
 Color Color_new(float red, float green, float blue);
 
+list next_Summit(list l);
+
+list previous_Summit(list l);
+
 #endif

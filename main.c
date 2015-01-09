@@ -5,6 +5,10 @@
 #include "droite.h"
 #include "plot.h"
 
+#define APPEND 1
+#define VERTEX 2
+#define EDGE 3
+
 list _currentSummits = NULL;
 
 int id_nbr = 0;
@@ -13,7 +17,7 @@ int polygone_closed = 0;
 
 Color _currentColor; 
 
-int mode = 1;
+int mode = APPEND;
 
 void display_CB()
 {
@@ -25,10 +29,15 @@ void display_CB()
     if(_currentSummits != NULL)
     {
         glBegin(GL_POINTS);
+        if(mode == VERTEX)
+        {
+            plot_square(_currentSummits->x, _currentSummits->y, 10, Color_new(255, 0, 0));
+            plot_square(_currentSummits->x, _currentSummits->y, 15, Color_new(255, 0, 0));
+        }
         glColor3ub(255,255,255);
         afficher_points(_currentSummits, _currentColor);
         afficher_lignes(_currentSummits, _currentColor);
-        plot_square(_currentSummits->x, _currentSummits->y, 10, Color_new(255, 0, 0));
+
         glEnd();
     }
 
@@ -46,8 +55,8 @@ void mouse_CB(int button, int state, int x, int y)
 
 void keyboard_CB(unsigned char key, int x, int y)
 {
-//    printf("key = %c = %d\n", key, key);
-    if(mode == 1) // On est dans le mode append
+    printf("key = %d\n", key);
+    if(mode == APPEND) // On est dans le mode append
     {
         if(key==99 || key==67) //touche c : devient polygone
         {
@@ -77,22 +86,55 @@ void keyboard_CB(unsigned char key, int x, int y)
             }
         }
     }
-    else if (mode == 2) // Quand on est dans le mode vertex
+    else if (mode == VERTEX) // Quand on est dans le mode vertex
     {
+        
+        if(key == 103) _currentSummits=next_Summit(_currentSummits);
+        else if(key == 104) _currentSummits=previous_Summit(_currentSummits);
 
     }
-    else if (mode == 3) // Quand on est dans le mode edge
+    else if (mode == EDGE) // Quand on est dans le mode edge
     {
         /* code */
     }
 
-    if(key== 97 || key ==65) mode = 1;
-    if (key == 118 || key == 86) mode = 2;
-    if (key == 101 || key == 69) mode = 3;
+    if(key== 97 || key ==65) mode = APPEND; //
+    if (key == 118 || key == 86) mode = VERTEX;
+    if (key == 101 || key == 69) mode = EDGE;
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
     glutPostRedisplay();
 }
+
+/*void special_CB(int key, int x, int y)
+{
+    switch(key)
+    {
+        case GLUT_KEY_PAGE_DOWN : 
+               if( mode == VERTEX )
+               {
+                    _currentSummits = previous_Summit(_currentSummits);
+               }
+               else if( MODE == EDGE )
+               {
+                current_courbe=prec_BCourbe(current_courbe);
+               } break;
+
+        case GLUT_KEY_PAGE_UP : 
+               if( mode == VERTEX )
+               {
+                    _currentSummits = next_Summit(_currentSummits);
+               } 
+               else if( MODE == EDGE )
+               {
+                current_courbe=next_BCourbe(current_courbe);
+               } break;
+
+
+    default : fprintf(stderr,"special_CB : %d : unknown key.\n",key);
+    }
+    glutPostRedisplay();
+}*/
 
 int main(int argc, char **argv)
 {
@@ -132,6 +174,7 @@ int main(int argc, char **argv)
     glutDisplayFunc(display_CB);
     glutMouseFunc(mouse_CB);
     glutKeyboardFunc(keyboard_CB);
+    //glutSpecialFunc(special_CB);
 
 	// Démarrage de la boucle d'attente des événements
     glutMainLoop();

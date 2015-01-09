@@ -16,6 +16,7 @@ int can_add_summit = 1;
 int polygone_closed = 0;
 
 Color _currentColor; 
+Color _selectColor;
 
 int mode = APPEND;
 
@@ -31,12 +32,20 @@ void display_CB()
         glBegin(GL_POINTS);
         if(mode == VERTEX)
         {
-            plot_square(_currentSummits->x, _currentSummits->y, 10, Color_new(255, 0, 0));
-            plot_square(_currentSummits->x, _currentSummits->y, 15, Color_new(255, 0, 0));
+            plot_square(_currentSummits->x, _currentSummits->y, 10, _selectColor);
+            plot_square(_currentSummits->x, _currentSummits->y, 15, _selectColor);
         }
-        glColor3ub(255,255,255);
-        afficher_points(_currentSummits, _currentColor);
-        afficher_lignes(_currentSummits, _currentColor);
+        if(mode == VERTEX || mode == APPEND)
+        {
+            afficher_points(_currentSummits, _currentColor);
+            afficher_lignes(_currentSummits, _currentColor, _currentColor); 
+        }
+        else
+        {
+            afficher_points(_currentSummits, _currentColor);
+            afficher_lignes(_currentSummits, _currentColor, _selectColor);
+        }
+
 
         glEnd();
     }
@@ -105,7 +114,8 @@ void keyboard_CB(unsigned char key, int x, int y)
 
     if(key== 97 || key ==65) mode = APPEND; 
     //Si le polygone est fermé on peut utiliser le mode VERTEX !
-    if ((key == 118 || key == 86) && polygone_closed == 1) mode = VERTEX; 
+    if ((key == 118 || key == 86) && polygone_closed == 1 && 
+        (nb_Summit(_currentSummits, 0) > 1)) mode = VERTEX; 
     if ((key == 101 || key == 69) && polygone_closed == 1) mode = EDGE;
     if(key==27 || key==113) exit(0); // Touche Escape ou q : quitter le programme
 
@@ -137,31 +147,24 @@ void special_CB(int key, int x, int y)
                    break;
 
         case GLUT_KEY_RIGHT :  
-                  if( (mode == VERTEX) && (_currentSummits!=NULL) )
+                  if( (mode == VERTEX ) && (_currentSummits!=NULL) )
                   {
                     _currentSummits= move_right(_currentSummits);
                   }
                 break;
         case GLUT_KEY_PAGE_DOWN : 
-               if( mode == VERTEX )
+               if( mode != APPEND )
                {
-                   
                     _currentSummits = previous_Summit(_currentSummits);
                }
-               /*else if( MODE == EDGE )
-               {
-                current_courbe=prec_BCourbe(current_courbe);
-               } */break;
+                break;
 
         case GLUT_KEY_PAGE_UP : 
-               if( mode == VERTEX )
+               if( mode != APPEND )
                {
                     _currentSummits = next_Summit(_currentSummits);
                } 
-               /*else if( MODE == EDGE )
-               {
-                current_courbe=next_BCourbe(current_courbe);
-               } */break;
+               break;
 
 
         //default : fprintf(stderr,"special_CB : %d : unknown key.\n",key);
@@ -175,6 +178,7 @@ int main(int argc, char **argv)
     int windowPosX = 100, windowPosY = 10;
     char *window_name = "Project";
     _currentColor = Color_new(255, 255, 255);
+    _selectColor = Color_new(255, 0, 0);
 
     // Definition de la taille de la fenetre pour glut
     glutInitWindowSize(largeur,hauteur);

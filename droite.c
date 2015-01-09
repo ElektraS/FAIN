@@ -129,26 +129,38 @@ list supprimerSommet(list l)
 
 list add_summit(list l, int x, int y)
 {
-	list tmp = malloc(sizeof(struct element));
+	list res/* = malloc(sizeof(struct element))*/;
+	list tmp;
 	if(l==NULL)
 	{
 		return nouveauSommet(l, x, y);
 	}
 
-	tmp->x = x;
-	tmp->y = y;
+	/*tmp->x = x;
+	tmp->y = y;*/
 	if(l != NULL && l->next != NULL)
 	{
+		/*if(l->id == 0) 
+		{
+			l->id = 1;
+			tmp->id =0;
+		}
 		tmp->next = l->next;
 		tmp->prev = l;
-		l->next = tmp;
-		tmp->next->prev=tmp;	
+		l->next->prev = tmp;
+		l->next = tmp;*/
+		tmp = l->prev;
+		res =nouveauSommet(l, x,y);
+		res->prev = tmp;
+		tmp->next = res;
+
+	
 	}	
 	else
 	{
-		tmp->prev = l;
+		//tmp->prev = l;
 	}
-	return tmp;	
+	return res;	
 }
 
 list next_Summit(list l)

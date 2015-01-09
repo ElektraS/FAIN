@@ -55,9 +55,13 @@ void display_CB()
 
 void mouse_CB(int button, int state, int x, int y)
 {
-    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1 && mode == 1)
+    if(state==GLUT_DOWN && button==GLUT_LEFT_BUTTON && can_add_summit == 1 && mode == APPEND)
     {
         _currentSummits = nouveauSommet(_currentSummits,x,y);
+    }
+    if(state == GLUT_DOWN && button == GLUT_MIDDLE_BUTTON && mode == EDGE)
+    {
+        _currentSummits = add_summit(_currentSummits, x, y);
     }
     glutPostRedisplay(); 
 }

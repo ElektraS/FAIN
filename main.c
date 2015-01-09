@@ -69,7 +69,7 @@ void mouse_CB(int button, int state, int x, int y)
         }
         else if (mode == EDGE)
         {
-            _currentSummits = MoveSummit( _currentSummits, closestVertex(_currentSummits, x, y, NULL, 20000));
+            _currentSummits = MoveSummit(_currentSummits, closestEdge(closestVertex(_currentSummits, x, y, NULL, 20000), x,y));
         }
     }
     if(state == GLUT_DOWN && button == GLUT_MIDDLE_BUTTON && mode == EDGE)

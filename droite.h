@@ -58,12 +58,10 @@ void select_edge(list l, Color select_color, Color current_color);
 
 list closestVertex(list l, int x, int y, list res, double sdis);
 
-list closestEdge(list l, int x, int y, list res, double sdis);
+list closestEdge(list l, int x, int y);
 
 list MoveSummit(list l, list target);
 
 double distanceBetweenPoints(int xa, int ya, int xb, int yb);
-
-double distanceBetweenPointAndSegment(int xp, int yp, int xa, int ya, int xb, int yb);
 
 #endif

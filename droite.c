@@ -285,61 +285,16 @@ list MoveSummit(list l, list target)
 	else return target;
 }
 
-double distanceBetweenPointAndSegment(int xp, int yp, int xa, int ya, int xb, int yb)
-{
-	int vpax = xa - xp;
-	int vpay = ya - yp;
-	int vabx = xa - xb;
-	int vaby= ya - yb;
-
-	float dot = vpax * vabx + vpay * vaby;
-	float dist = vabx * vabx + vpay * vpay;
-	float param = dot / dist;
-
-	int x = 0;
-	int y = 0;
-	if(param < 0)
-	{
-		x=xa;
-		y=ya;
-	}
-	else if(param > 1)
-	{
-		x=xb;
-		y=yb;
-	}
-	else 
-	{
-		x = xa + param * (xb-xa);
-		y = ya + param * (yb-ya);
-	}
-	return distanceBetweenPoints(xp, yp, x, y);
-}
-
-list closestEdge(list l, int x, int y, list res, double sdis)
+list closestEdge(list l, int x, int y)
 {
 
 	if(l ==NULL)
 	{
-		return res;
+		return l;
 	}
-	else if(l->id != 0)
+	if(distanceBetweenPoints(x, y, l->next->x, l->next->y)>distanceBetweenPoints(x, y, l->prev->x, l->prev->y))
 	{
-		if (distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y) < sdis)
-		{
-			return closestEdge(l->next, x, y, l, distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y));
-		}
-		else return closestEdge(l->next, x, y, res, sdis);
+		return l->prev;
 	}
-	else 
-	{
-		if (distanceBetweenPointAndSegment(x, x, l->x, l->y, l->next->x, l->next->y) < sdis)
-		{
-			return l;
-		}
-		else 
-		{
-			return res;
-		}
-	}
+	else return l->next;
 }

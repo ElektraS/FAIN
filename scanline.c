@@ -180,7 +180,7 @@ void scanline(list l, Color c)
 	int ymin = 0;
 	int ymax = 0;
 
-	while(temp != NULL)
+	while(temp != NULL && temp->id != 0)
 	{
 		if(temp->x < xmin)
 		{
@@ -291,7 +291,7 @@ void scanline2(list l, Color c)
 	int xmax = 0 ;
 	int ymin = 0 ; 
 	int ymax = 0 ;
-	while(temp != NULL)
+	while(temp != NULL && temp->id !=0)
 	{
 		if(temp->x < xmin)
 		{

@@ -8,7 +8,7 @@ int calc_x_min(list l, int x)
 {
 	int xmin;
 	xmin = x;
-	if(l = NULL)
+	if(l == NULL)
 	{
 		return xmin;
 	}
@@ -26,7 +26,7 @@ int calc_x_max(list l, int x)
 {
 	int xmax;
 	xmax = x;
-	if(l = NULL)
+	if(l == NULL)
 	{
 		return xmax;
 	}
@@ -44,7 +44,7 @@ int calc_y_min(list l, int y)
 {
 	int ymin;
 	ymin = y;
-	if(l = NULL)
+	if(l == NULL)
 	{
 		return ymin;
 	}
@@ -62,7 +62,7 @@ int calc_y_max(list l, int y)
 {
 	int ymax;
 	ymax = y;
-	if(l = NULL)
+	if(l == NULL)
 	{
 		return ymax;
 	}

@@ -88,14 +88,8 @@ list supprimerSommet(list l)
 	}
 	else if(l->id != 0)
 	{
-		if(l->prev != NULL && l->next != NULL)
-		{
-			tmp = l->next;
-			l->next->prev = l->prev;
-			l->prev->next = l->next;
-		}
-		else if(l->prev == NULL)
-			l->next->prev = l->prev;
+		l->next->prev = l->prev;
+		l->prev->next = l->next;
 	}
 	else 
 	{

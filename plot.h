@@ -12,7 +12,7 @@ void plot_square(int x, int y, int size, Color c);
 
 void afficher_points(list l, Color c);
 
-void afficher_lignes(list l, Color c);
+void afficher_lignes(list l, Color current_color, Color select_color);
 
 void tracerPixel(int x, int y, Color c);
 

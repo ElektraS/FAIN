@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include "droite.h"
+#include "plot.h"
 
 Color Color_new(float red, float green, float blue)
 {
@@ -169,4 +170,22 @@ list move_bottom(list l)
 {
 	l->y += 1;
 	return l;
+}
+
+void select_edge(list l, Color select_color, Color current_color)
+{
+	if(l != NULL)
+	{
+		if(l->next != NULL)
+		{
+			tracerDroite(l->x, l->y, l->next->x, l->next->y, select_color);
+			if(l->prev != NULL) tracerDroite(l->x, l->y, l->prev->x, l->prev->y, current_color);
+		}
+		else if(l->prev != NULL)
+		{
+			tracerDroite(l->x, l->y, l->next->x, l->next->y, current_color);
+		}
+	} 
+
+		
 }

@@ -207,7 +207,7 @@ void afficher_points(list l, Color c)
     }
 }
 
-void afficher_lignes(list l, Color c)
+void afficher_lignes(list l, Color current_color, Color select_color)
 {
     if(l!=NULL)
     {
@@ -215,10 +215,10 @@ void afficher_lignes(list l, Color c)
         {
             if(l->id!=0)
             {
-                tracerDroite(l->x, l->y, l->next->x, l->next->y, c);
-                afficher_lignes(l->next, c);  
+                tracerDroite(l->x, l->y, l->next->x, l->next->y, current_color);
+                afficher_lignes(l->next, current_color, select_color);  
             }   
-            else if(l->next !=NULL) tracerDroite(l->x, l->y, l->next->x, l->next->y, c);        
+            else if(l->next !=NULL) tracerDroite(l->x, l->y, l->next->x, l->next->y, select_color);        
         }
     }
 }

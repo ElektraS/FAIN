@@ -52,4 +52,6 @@ list move_top(list l);
 
 list move_bottom(list l);
 
+void select_edge(list l, Color select_color, Color current_color);
+
 #endif

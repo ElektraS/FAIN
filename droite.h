@@ -44,4 +44,12 @@ list next_Summit(list l);
 
 list previous_Summit(list l);
 
+list move_left(list l);
+
+list move_right(list l);
+
+list move_top(list l);
+
+list move_bottom(list l);
+
 #endif

@@ -155,7 +155,7 @@ void tracerDroite(int xa, int ya, int xb, int yb, Color current_color)
 			currX = xa;
 			for(currY=ya; currY>=yb; currY--)
 			{
-				tracerPixel(currX, currY, Color_new(255,255,255));
+				tracerPixel(currX, currY, current_color);
 				if(count>0)
 				{
 					count = count - 2*dX;
@@ -174,7 +174,7 @@ void tracerDroite(int xa, int ya, int xb, int yb, Color current_color)
 			currY = ya;
 			for(currX=xa; currX<=xb; currX++)
 			{
-				tracerPixel(currX, currY, Color_new(255,255,255));
+				tracerPixel(currX, currY, current_color);
 				if(count>0)
 				{
 					count = count + 2*dY;

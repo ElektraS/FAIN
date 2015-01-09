@@ -112,6 +112,32 @@ void special_CB(int key, int x, int y)
 {
     switch(key)
     {
+        case GLUT_KEY_UP    : 
+                  if( (mode == VERTEX) && (_currentSummits!=NULL) )
+                  {
+                        _currentSummits= move_top(_currentSummits);
+                  } break;
+
+        case GLUT_KEY_DOWN  :   
+                  if( (mode == VERTEX) && (_currentSummits!=NULL) )
+                  {
+                    _currentSummits = move_bottom(_currentSummits);
+                  } 
+                  break;
+
+        case GLUT_KEY_LEFT  :   
+                  if( (mode == VERTEX) && (_currentSummits!=NULL) )
+                  {
+                    _currentSummits = move_left(_currentSummits);
+                  }
+                   break;
+
+        case GLUT_KEY_RIGHT :  
+                  if( (mode == VERTEX) && (_currentSummits!=NULL) )
+                  {
+                    _currentSummits= move_right(_currentSummits);
+                  }
+                break;
         case GLUT_KEY_PAGE_DOWN : 
                if( mode == VERTEX )
                {

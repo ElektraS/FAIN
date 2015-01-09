@@ -147,3 +147,26 @@ list previous_Summit(list l)
 	else return NULL;
 }
 
+list move_left(list l)
+{
+	l->x -= 1;
+	return l;
+}
+
+list move_right(list l)
+{
+	l->x += 1;
+	return l;
+}
+
+list move_top(list l)
+{
+	l->y -= 1;
+	return l;
+}
+
+list move_bottom(list l)
+{
+	l->y += 1;
+	return l;
+}
